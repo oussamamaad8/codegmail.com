@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur d'Email et Mot de Passe - Oussama Maad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #00FF00;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .language-container {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #222;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+            width: 80%;
+        }
+        input, button, select {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            background-color: #333;
+            color: #00FF00;
+            border: 2px solid #00FF00;
+        }
+        input:focus, button:focus, select:focus {
+            outline: none;
+            border-color: #FF00FF;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #222;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+        }
+        .param-container {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            display: inline-block;
+        }
+        .param-group {
+            margin-bottom: 15px;
+        }
+        .param-group label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector on the left side -->
+    <div class="language-container">
+        <p id="selectLanguageLabel">Sélectionner la langue :</p>
+        <select id="language" onchange="changeLanguage()">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+            <option value="ar">عربي</option>
+            <option value="ja">日本語</option>
+        </select>
+    </div>
+
+    <div class="content">
+        <h1 id="title">Générateur d'Email et Mot de Passe - Oussama Maad</h1>
+        <p id="welcomeMessage">Bienvenue sur le générateur créé par Oussama Maad !</p>
+
+        <!-- Paramètre: Formulaire de Configuration -->
+        <div class="param-container">
+            <h2>Paramètres</h2>
+
+            <div class="param-group">
+                <label for="firstName" id="labelFirstName">Entrez votre prénom :</label>
+                <input type="text" id="firstName" placeholder="Prénom">
+            </div>
+            
+            <div class="param-group">
+                <label for="lastName" id="labelLastName">Entrez votre nom :</label>
+                <input type="text" id="lastName" placeholder="Nom">
+            </div>
+
+            <div class="param-group">
+                <label for="domain" id="labelDomain">Choisissez le domaine de votre email :</label>
+                <select id="domain">
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="gmail.fr">gmail.fr</option>
+                    <option value="yahoo.com">yahoo.com</option>
+                    <option value="hotmail.com">hotmail.com</option>
+                </select>
+            </div>
+
+            <div class="param-group">
+                <label for="addNumber" id="labelAddNumber">Ajouter un numéro aléatoire ?</label>
+                <input type="checkbox" id="addNumber">
+            </div>
+            
+            <div class="param-group">
+                <label for="passwordLength" id="labelPasswordLength">Longueur du mot de passe :</label>
+                <input type="number" id="passwordLength" value="12" min="6" max="20">
+            </div>
+            
+            <button onclick="generateEmail()" id="generateButton">Générer Email et Mot de Passe</button>
+        </div>
+
+        <ul id="emailList"></ul>
+    </div>
+
+    <script>
+        function changeLanguage() {
+            const language = document.getElementById('language').value;
+            
+            if (language === "fr") {
+                // French Translation
+                document.getElementById("title").innerText = "Générateur d'Email et Mot de Passe - Oussama Maad";
+                document.getElementById("welcomeMessage").innerText = "Bienvenue sur le générateur créé par Oussama Maad !";
+                document.getElementById("selectLanguageLabel").innerText = "Sélectionner la langue :";
+                document.getElementById("labelFirstName").innerText = "Entrez votre prénom :";
+                document.getElementById("labelLastName").innerText = "Entrez votre nom :";
+                document.getElementById("labelDomain").innerText = "Choisissez le domaine de votre email :";
+                document.getElementById("labelAddNumber").innerText = "Ajouter un numéro aléatoire ?";
+                document.getElementById("labelPasswordLength").innerText = "Longueur du mot de passe :";
+                document.getElementById("generateButton").innerText = "Générer Email et Mot de Passe";
+            } else if (language === "en") {
+                // English Translation
+                document.getElementById("title").innerText = "Email and Password Generator - Oussama Maad";
+                document.getElementById("welcomeMessage").innerText = "Welcome to the generator created by Oussama Maad!";
+                document.getElementById("selectLanguageLabel").innerText = "Select Language:";
+                document.getElementById("labelFirstName").innerText = "Enter your first name:";
+                document.getElementById("labelLastName").innerText = "Enter your last name:";
+                document.getElementById("labelDomain").innerText = "Choose your email domain:";
+                document.getElementById("labelAddNumber").innerText = "Add random number?";
+                document.getElementById("labelPasswordLength").innerText = "Password length:";
+                document.getElementById("generateButton").innerText = "Generate Email and Password";
+            } else if (language === "ar") {
+                // Arabic Translation
+                document.getElementById("title").innerText = "مولد البريد الإلكتروني وكلمة المرور - أسامة معاد";
+                document.getElementById("welcomeMessage").innerText = "مرحبًا بك في المولد الذي أنشأه أسامة معاد!";
+                document.getElementById("selectLanguageLabel").innerText = "اختر اللغة:";
+                document.getElementById("labelFirstName").innerText = "أدخل اسمك الأول:";
+                document.getElementById("labelLastName").innerText = "أدخل اسمك الأخير:";
+                document.getElementById("labelDomain").innerText = "اختر نطاق البريد الإلكتروني:";
+                document.getElementById("labelAddNumber").innerText = "إضافة رقم عشوائي؟";
+                document.getElementById("labelPasswordLength").innerText = "طول كلمة المرور:";
+                document.getElementById("generateButton").innerText = "توليد البريد الإلكتروني وكلمة المرور";
+            } else if (language === "ja") {
+                // Japanese Translation
+                document.getElementById("title").innerText = "メールとパスワードジェネレーター - オッサマ・マアド";
+                document.getElementById("welcomeMessage").innerText = "オッサマ・マアドによって作成されたジェネレーターへようこそ！";
+                document.getElementById("selectLanguageLabel").innerText = "言語を選択:";
+                document.getElementById("labelFirstName").innerText = "名前を入力してください:";
+                document.getElementById("labelLastName").innerText = "姓を入力してください:";
+                document.getElementById("labelDomain").innerText = "メールドメインを選択:";
+                document.getElementById("labelAddNumber").innerText = "ランダムな番号を追加しますか？";
+                document.getElementById("labelPasswordLength").innerText = "パスワードの長さ:";
+                document.getElementById("generateButton").innerText = "メールとパスワードを生成";
+            }
+        }
+
+        function generateEmail() {
+            const firstName = document.getElementById('firstName').value.toLowerCase();
+            const lastName = document.getElementById('lastName').value.toLowerCase();
+            const domain = document.getElementById('domain').value;
+            const addNumber = document.getElementById('addNumber').checked;
+            const passwordLength = document.getElementById('passwordLength').value;
+
+            if (!firstName || !lastName) {
+                alert("Please enter your first and last name!");
+                return;
+            }
+
+            function getRandomNumber() {
+                return Math.floor(Math.random() * 100000);
+            }
+
+            function generatePassword(length) {
+                const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
+                let password = '';
+                for (let i = 0; i < length; i++) {
+                    password += charset.charAt(Math.floor(Math.random() * charset.length));
+                }
+                return password;
+            }
+
+            const randomNumber = addNumber ? getRandomNumber() : '';
+            const email = `${firstName}${lastName}${randomNumber ? randomNumber : ''}@${domain}`;
+            const password = generatePassword(passwordLength);
+
+            const emailList = document.getElementById('emailList');
+            emailList.innerHTML = `<li>Generated Email: ${email}</li><li>Generated Password: ${password}</li>`;
+        }
+    </script>
+</body>
+</html>
